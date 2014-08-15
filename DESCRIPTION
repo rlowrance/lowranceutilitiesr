@@ -1,0 +1,8 @@
+Package: lowranceutilitiesr
+Title: General utilities for R programming
+Description: I found these useful and not project-specific
+Version: 0.1
+Author: Roy Lowrance <roy.lowrance@gmail.com>
+Maintainer: Roy Lowrance <roy.lowrance@gmail.com>
+License: GPL v3
+
