@@ -1,5 +1,5 @@
 # InitializeR.R
-InitializeR <- function(start.JIT=FALSE, duplex.output.to=NULL) {
+InitializeR <- function(start.JIT=FALSE, duplex.output.to=NULL, random.seed = 1) {
     # setup R's execution environment
     # ARGS: None
     # RETURNS: NULL
@@ -7,7 +7,7 @@ InitializeR <- function(start.JIT=FALSE, duplex.output.to=NULL) {
     options(warn=2)  # turn warnings into errors
     options(error=dump.frames)  # after a crash run command debugger()
 
-    set.seed(1)      # random number generator seed
+    set.seed(random.seed)      # random number generator seed
 
     if (start.JIT) {
         require('compiler')
