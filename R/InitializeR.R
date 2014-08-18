@@ -7,6 +7,7 @@ InitializeR <- function(start.JIT=FALSE, duplex.output.to=NULL, random.seed = 1)
     options(warn=2)  # turn warnings into errors
     options(error=dump.frames)  # after a crash run command debugger()
 
+    stopifnot(is.numeric(random.seed))
     set.seed(random.seed)      # random number generator seed
 
     if (start.JIT) {
