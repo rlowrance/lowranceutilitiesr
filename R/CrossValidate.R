@@ -1,5 +1,3 @@
-source('Require.R')
-Require('ListAppendEach')
 CrossValidate <- function(data, nfolds, Models, Assess, experiment) {
     # perform cross validation
     # ARGS
@@ -101,10 +99,12 @@ CrossValidate <- function(data, nfolds, Models, Assess, experiment) {
     }
 
     # determine best model to be the one with the lowest error rate on average across the folds
+    #cat('in CrossValidate\n'); browser()
     best.average.error.rate <- Inf
     for (this.model.index in 1:nmodels) {
         in.model <- fold.assessment$model.index == this.model.index
-        this.average.error.rate <- mean(fold.assessment$error.rate[in.model])
+        # allow for NA (= NaN) values in the assessments
+        this.average.error.rate <- mean(fold.assessment$error.rate[in.model], na.rm = TRUE)
         if (this.average.error.rate < best.average.error.rate) {
             best.average.error.rate <- this.average.error.rate
             best.model.index <- this.model.index
