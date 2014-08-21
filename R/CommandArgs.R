@@ -1,3 +1,11 @@
+#' Return the command line argumes after \code{--arg}
+#'
+#' \code{CommandArgs} returns either the arguments from the command line or
+#' the default arguments supplied in the function call.
+#'
+#' @param defaultArgs optional; if present, returned instead of the actual command line arguments
+#' @param verbose optional default \code{TRUE}; whether to print the returned args
+#' @export
 CommandArgs <- function(defaultArgs, verbose = TRUE) {
     # return command args if present, otherwise return defaultArg
     command.args <- commandArgs()
