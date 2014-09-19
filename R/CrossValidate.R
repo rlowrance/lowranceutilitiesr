@@ -61,7 +61,11 @@ CrossValidate <- function(data, nfolds, Models, Assess, experiment, control) {
             }
 
             Model <- Models[[this.model.index]]
-            model.result <- Model(data, is.training, is.testing, control)
+            model.result <- Model( data = data
+                                  ,is.training = is.training
+                                  ,is.testing = is.testing
+                                  ,control = control
+                                  )
             #cat('model.result\n'); browser()
             this.assessment <- Assess(model.result)
             #cat('examine this.assessment in CrossValidate\n'); browser()
