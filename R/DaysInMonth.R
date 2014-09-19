@@ -1,4 +1,4 @@
-Require('DivisibleBy')
+source('DivisibleBy.R')
 DaysInMonth <- function(year, month) {
     # return number of days in month, accounting for leap years
     #cat('starting DaysInMonth', year, month, '\n'); browser()
