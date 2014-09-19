@@ -6,6 +6,9 @@ ParseCommandLine <- function(cl, keywords, ignoreUnexpected = FALSE, verbose = T
     #                   only args of form --KEYWORD are allowed
     #                   each of these must have a value
     # allowUnexpected : logical
+    # Example: ParseCommandLine( cl = list('--a', '20')
+    #                            ,keywords = c('a')
+    #                           )
 
     InList <- function(str) {
         # is the str in the keyword char vector?
