@@ -1,18 +1,20 @@
-CrossValidate <- function(data, nfolds, Models, Assess, experiment) {
+CrossValidate <- function(data, nfolds, Models, Assess, experiment, control) {
     # perform cross validation
     # ARGS
     # data           : a data frame
     # nfolds         : numeric scalar, number of folds (ex: 10)
-    # Models         : a list of functions such that calling the call
-    #                  Models[[i]](data, training.indices, testing.indices) yields
-    #                  a list with elements $actual and $prediction
-    #                  where $actual     : numeric vector of values in the training set (never NA)
-    #                        $prediction : numeric vector of predicts (possibly NA)
+    # Models         : a list of functions such that calling
+    #                  Models[[i]](data, is.training, is.testing, control) yields
+    #                  an object, for example, a list with elements 
+    #                  $actual     : numeric vector of values in the training set (never NA)
+    #                  $prediction : numeric vector of predicts (possibly NA)
     # Assess         : function(<Models[[i]] returned value>) --> list <error rates>
-    #                  yields evaluations of the actual and prediction results from a model
-    #                  the best model is the one with the lowest <error rates>[[1]]
-    #                  all <error rates> are returned in the data.frame all.result
+    #                  yields a list of named numbers, the first of which is taken to be the
+    #                  error rate of Model[[i]] on the fold represented by is.training and
+    #                  is.testing. The model with the lowest error rate is return as the
+    #                  best model.
     # experiment     : chr scalar, vector of names for experiments
+    # control        : an object passed to each call to Model[[i]]
     # RETURNS a list
     # $best.model.index : index i of model with lowest error.rate
     # $all.assessment   : data.frame with $fold, $model.index, $error.rate $assessment.<Assess result name>
@@ -59,7 +61,7 @@ CrossValidate <- function(data, nfolds, Models, Assess, experiment) {
             }
 
             Model <- Models[[this.model.index]]
-            model.result <- Model(data, is.training, is.testing)
+            model.result <- Model(data, is.training, is.testing, control)
             #cat('model.result\n'); browser()
             this.assessment <- Assess(model.result)
             #cat('examine this.assessment in CrossValidate\n'); browser()
