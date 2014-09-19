@@ -1,4 +1,4 @@
-CrossValidate <- function(data, nfolds, Models, Assess, experiments, control) {
+CrossValidate <- function(data, nfolds, Models, Assess, model.names, control) {
     # perform cross validation
     # ARGS
     # data           : a data frame
@@ -13,7 +13,7 @@ CrossValidate <- function(data, nfolds, Models, Assess, experiments, control) {
     #                  error rate of Model[[i]] on the fold represented by is.training and
     #                  is.testing. The model with the lowest error rate is return as the
     #                  best model.
-    # experiments    : chr scalar, vector of names for experiments
+    # model.names    : chr scalar, vector of names for Models
     # control        : an object passed to each call to Model[[i]]
     # RETURNS a list
     # $best.model.index : index i of model with lowest error.rate
@@ -57,7 +57,7 @@ CrossValidate <- function(data, nfolds, Models, Assess, experiments, control) {
 
             if (verbose) {
                 cat(sprintf('CrossValidate %s: determining error rate on model %d fold %d\n',
-                            experiments[[this.model.index]], this.model.index, this.fold))
+                            model.names[[this.model.index]], this.model.index, this.fold))
             }
 
             Model <- Models[[this.model.index]]
@@ -198,7 +198,7 @@ CrossValidate.test <- function() {
                                nfolds = nfolds,
                                Models = Models,
                                Assess = Assess,
-                               experiments = NULL)
+                               model.names = NULL)
 
     if (verbose) {
         print('cv.result')
