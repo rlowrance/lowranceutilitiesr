@@ -3,5 +3,5 @@ WithRestoredRandomSeed <- function(f) {
     oldseed <- NULL
     if (exists('.Random.seed')) oldseed <- get('.Random.seed', .GlobalEnv)
     f()
-    if (exists('.Random.seed')) assign('Random.seed', oldseed, .GlobalEnv)
+    if (exists('.Random.seed')) assign('.Random.seed', oldseed, .GlobalEnv)
 }
