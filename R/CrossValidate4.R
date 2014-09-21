@@ -1,4 +1,4 @@
-CrossValidate <- function(data, nfolds, Models, Assess, model.names, control) {
+CrossValidate4 <- function(data, nfolds, Models, Assess, model.names, control) {
     # perform cross validation
     # ARGS
     # data           : a data frame
