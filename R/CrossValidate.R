@@ -35,7 +35,7 @@ CrossValidate <- function(data, nfolds, Models, model.names, control, verbose = 
     }
 
     PrintModelFold <- function(what, this.model.index, this.fold) {
-        s <- sprintf( 'CrossValidate: model %s model index %d fold %d\n'
+        s <- sprintf( 'CrossValidate: model %s %s model index %d fold %d\n'
                      ,model.names[[this.model.index]]
                      ,what
                      ,this.model.index
