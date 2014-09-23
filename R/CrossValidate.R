@@ -1,12 +1,13 @@
-CrossValidate <- function(data, nfolds, Models, model.names, control, verbose = FALSE) {
+CrossValidate <- function(data, nfolds, EvaluateModel, model.names, control, verbose = FALSE) {
     # perform cross validation
     # ARGS
     # data           : a data frame
     # nfolds         : numeric scalar, number of folds (ex: 10)
-    # Models         : a list of functions such that calling
-    #                  Models[[i]](data, is.training, is.testing, control) yields
+    # EvaluateModel  : a list of functions such that calling
+    #                  EvaluateModel[[i]](data, is.training, is.testing, control) yields
     #                  an object that is returned as part of the list returned by CrossValidate
-    # model.names    : chr scalar, vector of names for Models
+    #                  EvaluateModel[[i]]() --> possibly an estimate of the generalized error
+    # model.name     : chr scalar, vector of names for Models underlying EvaluateModel
     # control        : an object passed to each call to Model[[i]]
     # verbose        : logical, if TRUE, print as we calculate
     # RETURNS a nested list such that
@@ -19,7 +20,7 @@ CrossValidate <- function(data, nfolds, Models, model.names, control, verbose = 
 
     stopifnot(nfolds <= nrow(data))
 
-    nmodels <- length(Models)
+    nmodels <- length(EvaluateModel)
     stopifnot(nmodels == length(model.names))
 
     # assign each sample randomly to a fold
@@ -53,17 +54,17 @@ CrossValidate <- function(data, nfolds, Models, model.names, control, verbose = 
                 PrintModelFold('determinining error rate', this.model.index, this.fold)
             }
 
-            Model <- Models[[this.model.index]]
-            model.result <- Model( data = data
-                                  ,is.training = is.training
-                                  ,is.testing = is.testing
-                                  ,control = control
-                                  )
+            Evaluate <- EvaluateModel[[this.model.index]]
+            evaluate.result <- Evaluate( data = data
+                                     ,is.training = is.training
+                                     ,is.testing = is.testing
+                                     ,control = control
+                                     )
             if (verbose) {
                 PrintModelFold('result', this.model.index, this.fold)
-                print(model.result)
+                print(evaluate.result)
             }
-            result[[this.model.index]][[this.fold]] <- model.result
+            result[[this.model.index]][[this.fold]] <- evaluate.result
         }
     }   
     result
@@ -111,8 +112,8 @@ CrossValidate.test <- function() {
     nfolds <- 2
     cv.result <- CrossValidate( data = data
                                ,nfolds = nfolds
-                               ,Models = list(ModelA, ModelB)
-                               ,model.names = list('A', 'B')
+                               ,EvaluateModel = list(ModelA, ModelB)
+                               ,model.name = list('A', 'B')
                                ,verbose = verbose
                                )
     if (verbose) str(cv.result)
