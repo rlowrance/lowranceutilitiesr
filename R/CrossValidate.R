@@ -18,6 +18,9 @@ CrossValidate <- function(data, nfolds, EvaluateModel, model.names, control, ver
 
     #cat('starting CrossValidate', nrow(data), nfolds, length(Models), '\n'); browser()
 
+    debugging <- TRUE
+    debugging <- FALSE
+
     stopifnot(nfolds <= nrow(data))
 
     nmodels <- length(EvaluateModel)
@@ -52,6 +55,13 @@ CrossValidate <- function(data, nfolds, EvaluateModel, model.names, control, ver
         for (this.model.index in 1:nmodels) {
             if (verbose) {
                 PrintModelFold('determinining error rate', this.model.index, this.fold)
+            }
+
+            if (debugging) {
+                if (this.fold != 9) {
+                    cat('CrossValidate debugging skipping fold', this.fold, '\n')
+                    next
+                }
             }
 
             Evaluate <- EvaluateModel[[this.model.index]]
