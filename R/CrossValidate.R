@@ -72,7 +72,8 @@ CrossValidate <- function(data, nfolds, EvaluateModel, model.names, control, ver
                                      )
             if (verbose) {
                 PrintModelFold('result', this.model.index, this.fold)
-                print(evaluate.result)
+                str(evaluate.result)
+                #print(evaluate.result)
             }
             result[[this.model.index]][[this.fold]] <- evaluate.result
         }
